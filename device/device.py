@@ -1,7 +1,8 @@
 from . import deviceobject
 
 def buildSupportedDevices(allDevices, platform):
-    allDevices = [deviceobject.Device(labDevice, ["nodeid", "name", "nodeType"], platform) 
+    all = [deviceobject.Device(labDevice, platform)
                   for labDevice in allDevices]
-    
-    return [device for device in allDevices if device.os is not None]
+    supported = [device for device in all if device.os is not None]
+
+    return {"all": all, "supported": supported}

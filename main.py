@@ -7,5 +7,7 @@ from settings.readSettings import readSettings
 
 if __name__ == "__main__":
     settings = readSettings()
-    api = apicaller.createAuthedAPISession(settings["url"], settings["trustcert"])
-    devices = device.buildSupportedDevices(api.buildDevicesList(), settings["platform"])
+    api = apicaller.createAuthedAPISession(settings["general"]["url"], settings["general"]["trustcert"])
+    devices = device.buildSupportedDevices(api.buildDevicesList(settings["platform"]["lab_id"]), settings["platform"]["appliance"])
+
+    print(*devices["all"], sep="\n")

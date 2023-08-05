@@ -1,0 +1,22 @@
+{
+    "cml": {
+        "ios": [
+            "iosv",
+            "iosvl2"
+        ],
+        "iosxe": [
+            "cat8000v",
+            "csr1000v",
+            "cat9000v-s1",
+            "cat9000v-dd",
+            "cat9000v"
+        ],
+        "iosxr": [
+            "iosxrv",
+            "iosxrv9000"
+        ],
+        "nxos": [
+            "nxosv9000"
+        ]
+    }
+}

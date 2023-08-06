@@ -55,9 +55,9 @@ Before you use FABS, make sure you have the following prerequisite components in
 
 Afterwards, it's simple! First, clone this repository to your local system as a folder. You can do this by using the following command in your command line: `git clone https://github.com/kelvintechie1/fabsutil.git`
 
-After cloning the repository, open up the `settings.yaml` file and modify the configuration for the utility. Reference the `settings.md` file to find the valid parameters within the settings YAML file.
+After cloning the repository, open up the `settings.yaml` file in the `settings` folder and modify the configuration for the utility. Reference the `settings.md` file in the `docs` folder to find the valid parameters within the settings YAML file.
 
-With your `settings.yaml` file properly configured, you can run the `main.py` file to launch the utility. Note that there are command-line flags available. Run `main.py -?` to obtain more information pertaining the flags. **No flags are required to execute the utility in interactive mode.**
+With your `settings.yaml` file properly configured, you can run the `main.py` file in the root directory to launch the utility. Note that there are command-line flags available. Run `main.py -?` to obtain more information pertaining the flags. **No flags are required to execute the utility in interactive mode.**
 
 ---
 ### Developer Info

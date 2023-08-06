@@ -1,26 +1,19 @@
 from urllib3 import disable_warnings
 disable_warnings()
 
-from api.cml import cmlapi
-from device import device
-from getpass import getpass
+from api import apicaller
+from lab import device
+from settings.readSettings import readSettings
 
 if __name__ == "__main__":
-    apiObject = cmlapi.API(baseURL="https://ktl-csco-cml01.lab.trankelvin.com/api/v0",
-                           username=input("Enter your username: "),
-                           password=getpass("Enter your password: "))
+    settings = readSettings()
+    api = apicaller.createAuthedAPISession(settings["general"]["url"], settings["general"]["trustcert"])
+    allDevices = api.buildDevicesList(settings["platform"]["lab_id"])
+    links = api.buildLinksList(settings["platform"]["lab_id"])
+    interfaces = [api.buildInterfacesList(settings["platform"]["lab_id"], device["id"])
+                  for device in allDevices]
     
-    if apiObject.authAPI() is not None:
-        print("Authentication error. Validate your credentials/parameters and try again.")
-        exit(-1)
+    devices = device.buildSupportedDevices(allDevices, interfaces, links,
+                                           settings["platform"]["appliance"])
 
-    
-    allDevices = []
-    
-    for labDevice in apiObject.buildDevicesList():
-        allDevices.append(device.Device(labDevice, ["nodeid", "name", "nodeType"], "cml"))
-    
-    supportedDevices = [device for device in allDevices if device.os is not None]
-    
-    for supportedDevice in supportedDevices:
-        print(supportedDevice)
+    print(*devices["all"], sep="\n")

@@ -1,3 +1,5 @@
+## **WARNING: This project isn't finished yet. Still in development. It's public for the sole purposes of code review. Basically nothing below about how to use this utility or what it supports is accurate yet.**
+
 # Forget About the Boring Stuff (FABS)
 You can replace "stuff" with...your favorite s-word :D
 

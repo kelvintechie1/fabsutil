@@ -5,7 +5,7 @@ from api import apicaller
 from lab import device
 from settings.readSettings import readSettings
 
-if __name__ == "__main__":
+def main():
     settings = readSettings()
     api = apicaller.createAuthedAPISession(settings["general"]["url"], settings["general"]["trustcert"])
     allDevices = api.buildDevicesList(settings["platform"]["lab_id"])
@@ -17,3 +17,7 @@ if __name__ == "__main__":
                                            settings["platform"]["appliance"])
 
     print(*devices["all"], sep="\n")
+
+    
+if __name__ == "__main__":
+    main()

@@ -19,9 +19,9 @@ class CMLAPI(API):
         return nodes
     
     def buildInterfacesList(self, lab_id, node_id):
-        interfaces = [{"id": interface["id"], "name": interface["label"], 
-                       "mac_address": interface["mac_address"], "state": interface["state"]} 
-                       for interface in self.get(url=f"/labs/{lab_id}/nodes/{node_id}/interfaces", params={"data": "true"})]
+        interfaces = [{"id": interface["id"], "name": interface["label"], "mac_address": interface["mac_address"],
+                       "connected": interface["is_connected"], "state": interface["state"]} 
+                       for interface in self.get(url=f"/labs/{lab_id}/nodes/{node_id}/interfaces", params={"data": "true"}).json()]
         
         return interfaces
     
@@ -29,6 +29,6 @@ class CMLAPI(API):
         links = [{"id": link["id"], "name": link["label"], 
                   "interface_a": link["interface_a"], "interface_b": link["interface_b"],
                   "node_a": link["node_a"], "node_b": link["node_b"], "state": link["state"]}
-                  for link in self.get(url=f"/labs/{lab_id}/links", params={"data": "true"})]
+                  for link in self.get(url=f"/labs/{lab_id}/links", params={"data": "true"}).json()]
         
         return links

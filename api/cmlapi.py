@@ -6,11 +6,8 @@ class CMLAPI(API):
     def authAPI(self):
         body = {"username": self.username, "password": self.password}
         authToAPI = self.post(url='/authenticate', json=body)
-        if authToAPI.status_code == 200:
-            self.headers["Authorization"] = "Bearer " + authToAPI.text.strip('"')
-            return None
-        else:
-            return authToAPI.status_code
+        self.headers["Authorization"] = "Bearer " + authToAPI.text.strip('"')
+        return None
     
     def buildDevicesList(self, lab_id):
         nodes = [{"id": device["id"], "name": device["label"], "nodeType": device["node_definition"]} 
@@ -32,3 +29,5 @@ class CMLAPI(API):
                   for link in self.get(url=f"/labs/{lab_id}/links", params={"data": "true"}).json()]
         
         return links
+        
+            

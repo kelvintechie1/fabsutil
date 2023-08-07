@@ -3,7 +3,7 @@ from pathlib import Path
 from . import interfaceobject
 
 class Device:
-    with open((Path(__file__).parent.parent / "data/deviceMappings.json").resolve(), 
+    with open((Path(__file__).parents[1] / "data/deviceMappings.json").resolve(), 
               "r") as file:
         mappings = load(file)
 

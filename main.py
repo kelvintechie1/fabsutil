@@ -4,7 +4,7 @@ disable_warnings()
 import re
 from api import apicaller
 from lab import device
-from input import readSettings, templateparser
+from processing import readSettings, templateparser
 from errors import *
 from features.config import config_loopback_ipaddressing
 

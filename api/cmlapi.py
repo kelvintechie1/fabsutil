@@ -15,12 +15,12 @@ class CMLAPI(API):
         
         return nodes
     
-    def buildInterfacesList(self, lab_id, node_id):
-        interfaces = [{"id": interface["id"], "name": interface["label"], "mac_address": interface["mac_address"],
-                       "connected": interface["is_connected"], "state": interface["state"]} 
-                       for interface in self.get(url=f"/labs/{lab_id}/nodes/{node_id}/interfaces", params={"data": "true"}).json()]
+    def buildPortsList(self, lab_id, node_id):
+        ports = [{"id": port["id"], "name": port["label"], "mac_address": port["mac_address"],
+                       "connected": port["is_connected"], "state": port["state"]} 
+                       for port in self.get(url=f"/labs/{lab_id}/nodes/{node_id}/interfaces", params={"data": "true"}).json()]
         
-        return interfaces
+        return ports
     
     def buildLinksList(self, lab_id):
         links = [{"id": link["id"], "name": link["label"], 

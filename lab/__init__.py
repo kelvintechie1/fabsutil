@@ -1,1 +1,1 @@
-__all__ = ["device", "deviceobject", "interfaceobject", "linkobject"]
+__all__ = ["device", "deviceobject", "portobject", "linkobject"]

@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 # Don't push user specific settings back into Git repo
-data/user/
+data/user/*
+!data/user/*default*

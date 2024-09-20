@@ -15,7 +15,11 @@ class apirunner():
 
         except KeyError as e:
             raise processingerrors.SettingNotFoundError(e) from e
-    
+
+        self.devices = None
+        self.links = None
+        self.ports = None
+
     def runBaseAPIOperations(self):
         """Run API operations that exist in all network emulator platforms
         Currently - building topology (node/device/port data)"""

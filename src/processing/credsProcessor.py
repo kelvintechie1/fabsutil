@@ -11,7 +11,7 @@ def credsProcessor(cli_emulator_username, cli_emulator_password, settings):
         match labSettings["emulatorAuthMethod"]:
             case "settings":
                 creds = (labSettings["emulatorUser"], labSettings["emulatorPass"],
-                         processingerrors.SettingNotFoundError)
+                         processingerrors.SettingCredentialNotFoundError)
             case "env":
                 creds = (os.environ.get("FABS_EMULATOR_USERNAME"),
                          os.environ.get("FABS_EMULATOR_PASSWORD"),
@@ -19,6 +19,8 @@ def credsProcessor(cli_emulator_username, cli_emulator_password, settings):
             case "runtime":
                 creds = (cli_emulator_username, cli_emulator_password,
                          processingerrors.RuntimeCredentialNotFoundError)
+            case _:
+                raise KeyError("emulatorAuthMethod")
 
         if not (creds[0] and creds[1]):
             raise creds[2]

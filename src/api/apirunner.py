@@ -1,24 +1,27 @@
 """Runner module to execute API calls, abstracting API platform"""
-from src.errors import apierrors, processingerrors
+from src.errors import processingerrors
 from . import cmlapi, evengapi, gns3api
 
 class apirunner():
     """API runner class within runner module"""
-    def __init__(self, settings):
+    def __init__(self, platform, **kwargs):
         try:
-            platform = settings["lab"]["platform"]
-            apis = {"cml": cmlapi, "eveng": evengapi, "gns3": gns3api}
-            if platform not in apis:
-                raise KeyError("platform")
-            else:
-                self.emulator = apis[platform]
-
+            self.emulator = {"cml": cmlapi.CMLAPI, "eveng": evengapi.EVENGAPI, "gns3": gns3api.GNS3API}[platform](**kwargs)
         except KeyError as e:
-            raise processingerrors.SettingNotFoundError(e) from e
+            raise processingerrors.SettingNotFoundError("platform") from e
 
         self.devices = None
         self.links = None
         self.ports = None
+
+        self.runBaseAPIOperations()
+        match self.emulator:
+            case cmlapi.CMLAPI():
+                self.runCMLAPIOperations()
+            case evengapi.EVENGAPI():
+                pass
+            case gns3api.GNS3API():
+                pass
 
     def runBaseAPIOperations(self):
         """Run API operations that exist in all network emulator platforms
@@ -27,7 +30,7 @@ class apirunner():
         self.emulator.authAPI()
         self.devices = self.emulator.buildDevicesList()
         self.links = self.emulator.buildLinksList()
-        self.ports = [self.emulator.buildPortsList(device) for device in self.devices]
+        self.ports = [self.emulator.buildPortsList(device["id"]) for device in self.devices]
 
     def runCMLAPIOperations(self):
         """Run API operations specific for CML"""
@@ -36,4 +39,4 @@ class apirunner():
         portRange = (num for num in range(7200, 7300)) # Port range for console access, may add ability to change via config later
         for device in self.devices:
             device["port"] = next(portRange)
-            device.assignConsoleTelnetPort(device["id"], device["port"])
+            self.emulator.assignConsoleTelnetPort(device["id"], device["port"])

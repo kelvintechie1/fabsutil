@@ -1,7 +1,8 @@
 """Main module for the FABS Utility"""
 from pathlib import Path
-from src.processing.settingsProcessor import loadSettings
+from src.processing.settingsProcessor import loadSettings, validateMandatorySettingsExist
 from src.processing.credsProcessor import credsProcessor
+from src.api.apirunner import apirunner
 import click as cli
 
 from urllib3 import disable_warnings
@@ -17,10 +18,15 @@ disable_warnings()
             hide_input=True, prompt_required=False, type=str)
 def main(config_file, emulator_username, emulator_password):
     """Forget About the Boring Stuff (FABS) Utility - Automating your lab configs!"""
-    settings = loadSettings(Path(config_file).absolute())
+    settings = validateMandatorySettingsExist(loadSettings(Path(config_file).absolute()))
     creds = credsProcessor(emulator_username, emulator_password, settings)
 
+    api = apirunner(platform=settings["settings"]["lab"]["platform"],
+                    labId=settings["settings"]["lab"]["labId"],
+                    baseURL=f"https://{settings["settings"]["lab"]["emulatorAddress"]}",
+                    username=creds[0], password=creds[1], verifyStatus=False)
 
+    print(api.devices)
 
 if __name__ == "__main__":
     main()

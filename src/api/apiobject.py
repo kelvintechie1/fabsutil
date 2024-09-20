@@ -1,6 +1,6 @@
 """Module defining base API object for all network emulators"""
 import requests as rq
-from errors.apierrors import APIError
+from src.errors.apierrors import APIError
 
 class API(rq.Session):
     """Base API object for all network emulators"""

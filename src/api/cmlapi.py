@@ -4,9 +4,9 @@ from .apiobject import API
 
 class CMLAPI(API):
     """Object for interacting with CML API"""
-    def __init__(self, lab_id, **kwargs):
-        self.lab_id = lab_id
-        super().__init__(**kwargs)
+    def __init__(self, labId, baseURL, **kwargs):
+        self.labId = labId
+        super().__init__(baseURL=f"{baseURL}/api/v0", **kwargs)
 
     def authAPI(self):
         """Authenticate to CML API and obtain Bearer Token for Authorization Header"""
@@ -19,7 +19,7 @@ class CMLAPI(API):
         device ID, device name, device type"""
         nodes = [{"id": device["id"], "name": device["label"], "nodeType":
                   device["node_definition"]} for device in
-                  self.get(url=f"/labs/{self.lab_id}/nodes", params={"data": "true"}).json()]
+                  self.get(url=f"/labs/{self.labId}/nodes", params={"data": "true"}).json()]
 
         return nodes
 
@@ -28,7 +28,7 @@ class CMLAPI(API):
         links = [{"id": link["id"], "name": link["label"],
                   "interface_a": link["interface_a"], "interface_b": link["interface_b"],
                   "node_a": link["node_a"], "node_b": link["node_b"], "state": link["state"]}
-                  for link in self.get(url=f"/labs/{self.lab_id}/links",
+                  for link in self.get(url=f"/labs/{self.labId}/links",
                                        params={"data": "true"}).json()]
 
         return links
@@ -38,7 +38,7 @@ class CMLAPI(API):
         ports = [{"id": port["id"], "name": port["label"], "mac_address": port["mac_address"],
                        "connected": port["is_connected"],
                        "state": port["state"]} 
-                       for port in self.get(url=f"/labs/{self.lab_id}/nodes/{node_id}/interfaces",
+                       for port in self.get(url=f"/labs/{self.labId}/nodes/{node_id}/interfaces",
                                             params={"data": "true"}).json()]
 
         return ports
@@ -46,8 +46,8 @@ class CMLAPI(API):
     def assignConsoleTelnetPort(self, node_id, portNum):
         """Use CML2's PATty to assign port numbers to each device"""
         portTag = [f"serial:{portNum}"]
-        existingTags = self.get(url=f"/labs/{self.lab_id}/nodes/{node_id}",
+        existingTags = self.get(url=f"/labs/{self.labId}/nodes/{node_id}",
                                 params={"data": "true"}).json()["tags"]
         if portTag not in existingTags:
             newTags = {"tags": existingTags + portTag}
-            self.patch(url=f"/labs/{self.lab_id}/nodes/{node_id}", json=newTags)
+            self.patch(url=f"/labs/{self.labId}/nodes/{node_id}", json=newTags)

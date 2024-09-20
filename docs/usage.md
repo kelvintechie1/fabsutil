@@ -26,7 +26,7 @@ The following table contains usage instructions for the command-line flags inclu
 
 | Flag | Description |
 | ---- | ----------- |
-| `--help` | Display information about the flags in the CLI |
+| `-?` or `--help` | Display information about the flags in the CLI |
 | `-c` or `--config-file` | Override the default location for the `settings.yaml` file (default is in the `data/user` folder) |
 | `-u` or `--username` | Set the username for the network emulator API access, only considered if `emulatorAuthMethod` in `settings.yaml` is set to `runtime` |
 | `-p` or `--password` | Set the password for the network emulator API access, only considered if `emulatorAuthMethod` in `settings.yaml` is set to `runtime` |

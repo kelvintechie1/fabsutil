@@ -1,6 +1,5 @@
 """Module to interact with Cisco Modeling Labs 2.0 API"""
 # Import libraries
-import requests as rq
 from .apiobject import API
 
 class CMLAPI(API):
@@ -14,7 +13,6 @@ class CMLAPI(API):
         body = {"username": self.username, "password": self.password}
         authToAPI = self.post(url='/authenticate', json=body)
         self.headers["Authorization"] = "Bearer " + authToAPI.text.strip('"')
-        return None
 
     def buildDevicesList(self):
         """Query CML lab for list of all devices and selected attributes: 

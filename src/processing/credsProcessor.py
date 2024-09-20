@@ -25,7 +25,7 @@ def credsProcessor(cli_emulator_username, cli_emulator_password, settings):
         if not (creds[0] and creds[1]):
             raise creds[2]
 
-        return creds[0:1]
+        return creds[0:2]
 
     except KeyError as e:
         raise processingerrors.SettingNotFoundError(e) from e

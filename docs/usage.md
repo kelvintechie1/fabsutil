@@ -18,7 +18,7 @@ The steps on Windows are identical, except the `source` command is replaced by t
 
 To run FABS, just use the `main.py` file in the root directory! All other Python files located within the FABS directories will automatically be referenced by `main.py` as necessary.
 
-By running `python main.py`, you will accept all of the default settings. Reference the [FABS Defaults](#fabs-defaults) section for more. Settings overrides are passed to FABS through command-line arguments/flags. More information is available in the CLI through the `python main.py [-h|--help]` commands and in the [FABS Command-Line Flags](#fabs-command-line-flags) section of this document.
+By running `python main.py`, you will accept all of the default settings. Reference the [FABS Defaults](#fabs-defaults) section for more. Settings overrides are passed to FABS through command-line arguments/flags. More information is available in the CLI through the `python main.py --help` command and in the [FABS Command-Line Flags](#fabs-command-line-flags) section of this document.
 
 ### FABS Command-Line Flags
 
@@ -26,8 +26,10 @@ The following table contains usage instructions for the command-line flags inclu
 
 | Flag | Description |
 | ---- | ----------- |
-| `-h` or `--help` | Display information about the flags in the CLI |
-| `-c` or `--config-file` | Override the default location for the `settings.yaml` file (default is in the `data/user` folder)
+| `--help` | Display information about the flags in the CLI |
+| `-c` or `--config-file` | Override the default location for the `settings.yaml` file (default is in the `data/user` folder) |
+| `-u` or `--username` | Set the username for the network emulator API access, only considered if `emulatorAuthMethod` in `settings.yaml` is set to `runtime` |
+| `-p` or `--password` | Set the password for the network emulator API access, only considered if `emulatorAuthMethod` in `settings.yaml` is set to `runtime` |
 
 ## FABS Defaults
 ### Default settings.yaml file location
